@@ -2,9 +2,11 @@ module Dragonfly
   module OpenSSL
     class Encoder
       include ::Dragonfly::Configurable
-      configurable_attr :keyfile_path, '/tmp'
+      configurable_attr :keyfile_path, nil
 
       def encode(temp_object, options = {})
+        throw :unable_to_handle if keyfile_path.nil?
+
         options[:meta] = {} unless options[:meta]
 
         original_basename = File.basename(temp_object.path, '.*')
