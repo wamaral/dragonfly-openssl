@@ -10,7 +10,7 @@ module Dragonfly
 
           c.job :encrypt do |options|
             options ||= {}
-            encode(options)
+            encode(:encrypt, options)
           end
         end
       end

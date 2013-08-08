@@ -4,7 +4,7 @@ module Dragonfly
       include ::Dragonfly::Configurable
       configurable_attr :keyfile_path, nil
 
-      def encode(temp_object, options = {})
+      def encode(temp_object, format, options = {})
         throw :unable_to_handle if keyfile_path.nil?
 
         options[:meta] = {} unless options[:meta]
@@ -15,7 +15,7 @@ module Dragonfly
         tempfile.binmode
         tempfile.close
 
-        %x{openssl enc -aes-256-cbc -d -in "#{temp_object.path}" -out "#{tempfile.path}" -k "#{keyfile_path}"}
+        %x{openssl enc -aes-256-cbc -in "#{temp_object.path}" -out "#{tempfile.path}" -k "#{keyfile_path}"}
 
         content = ::Dragonfly::TempObject.new(File.new(tempfile.path))
         meta = {
