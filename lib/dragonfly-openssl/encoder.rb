@@ -9,7 +9,7 @@ module Dragonfly
 
         options[:meta] = {} unless options[:meta]
 
-        original_basename = File.basename(temp_object.path, '.*')
+        original_basename = File.basename(temp_object.path)
 
         tempfile = Tempfile.new(original_basename)
         tempfile.binmode
