@@ -5,9 +5,10 @@ module Dragonfly
       configurable_attr :keyfile_path, nil
 
       def encode(temp_object, format, options = {})
+        throw :unable_to_handle unless [:encrypt, :decrypt].include?(format)
         throw :unable_to_handle if keyfile_path.nil?
 
-        options[:meta] = {} unless options[:meta]
+        options[:meta] ||= {}
 
         original_basename = File.basename(temp_object.path)
 
@@ -15,12 +16,14 @@ module Dragonfly
         tempfile.binmode
         tempfile.close
 
-        %x{openssl enc -aes-256-cbc -in "#{temp_object.path}" -out "#{tempfile.path}" -k "#{keyfile_path}"}
+        dec = (format == :decrypt) ? '-d ' : ''
+
+        %x{openssl enc -aes-256-cbc #{dec} -in "#{temp_object.path}" -out "#{tempfile.path}" -k "#{keyfile_path}"}
 
         content = ::Dragonfly::TempObject.new(File.new(tempfile.path))
         meta = {
             name: original_basename,
-            encrypted: true
+            encrypted: (format != :decrypt)
         }.merge(options[:meta])
 
         [ content, meta ]

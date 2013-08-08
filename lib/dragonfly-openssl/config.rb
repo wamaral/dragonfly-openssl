@@ -12,6 +12,11 @@ module Dragonfly
             options ||= {}
             encode(:encrypt, options)
           end
+
+          c.job :decrypt do |options|
+            options ||= {}
+            encode(:decrypt, options)
+          end
         end
       end
 
