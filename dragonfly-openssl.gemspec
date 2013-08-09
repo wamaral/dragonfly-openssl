@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Wagner Amaral"]
   s.email       = ["wamaral@wamaral.org"]
   s.homepage    = "https://github.com/wamaral/dragonfly-openssl"
+  s.license     = "Apache 2.0"
   s.summary     = %q{Dragonfly wrapper for openssl executable}
   s.description = %q{Dragonfly wrapper for openssl executable}
 
