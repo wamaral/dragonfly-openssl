@@ -18,7 +18,7 @@ module Dragonfly
 
         dec = (format == :decrypt) ? '-d ' : ''
 
-        %x{openssl enc -aes-256-cbc #{dec} -in "#{temp_object.path}" -out "#{tempfile.path}" -k "#{key}"}
+        %x{openssl enc -aes-256-cbc #{dec} -in "#{temp_object.path}" -out "#{temp_file.path}" -pass pass:#{key}}
 
         content = ::Dragonfly::TempObject.new(File.new(temp_file.path))
         meta = {
