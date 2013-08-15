@@ -10,9 +10,9 @@ module Dragonfly
 
         options[:meta] ||= {}
 
-        original_basename = File.basename(temp_object.path)
+        original_filename = temp_object.original_filename
 
-        tempfile = Tempfile.new(original_basename)
+        tempfile = Tempfile.new(original_filename)
         tempfile.binmode
         tempfile.close
 
@@ -22,7 +22,7 @@ module Dragonfly
 
         content = ::Dragonfly::TempObject.new(File.new(tempfile.path))
         meta = {
-            name: original_basename,
+            name: original_filename,
             encrypted: (format != :decrypt)
         }.merge(options[:meta])
 
