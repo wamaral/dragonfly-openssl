@@ -5,7 +5,7 @@ module Dragonfly
       def self.apply_configuration(app, opts = {})
         app.configure do |c|
           c.encoder.register(Encoder) do |e|
-            e.keyfile_path = opts[:keyfile_path] if opts.has_key?(:keyfile_path)
+            e.key = opts[:key] if opts.has_key?(:key)
           end
 
           c.job :encrypt do |options|
